@@ -1,0 +1,12 @@
+{
+  "name": "taskmanagerapi",
+  "version": "1.0.0",
+  "description": "Api de Tareas con Usuarios",
+  "license": "ISC",
+  "author": "Facundo Vera",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
