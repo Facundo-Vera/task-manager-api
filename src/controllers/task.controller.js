@@ -40,28 +40,46 @@ const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, description, completed } = req.body;
 
-    const updateTask = await Task.findByIdAndUpdate(id,{
-      title,
-      description,
-      completed
-    },
-    {new:true}
-  )
-  return res.status(200).json({
-    ok:true,
-    message:"Tarea actualizada correctamente"
-  })
+    const updateTask = await Task.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        completed,
+      },
+      { new: true },
+    );
+    return res.status(200).json({
+      ok: true,
+      message: "Tarea actualizada correctamente",
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
-      ok:false,
-      message:"Error al actualizar la tarea"
-    })
+      ok: false,
+      message: "Error al actualizar la tarea",
+    });
   }
 };
 
-export { createTask, getTask ,updateTask};
+const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-//traer los datos que quiero actualizar  mediante el id
-//actualizarlos
-//guardaslos nuevamente
+    const taskdelete = await Task.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      ok: true,
+      message: "Tarea eliminada correctamente",
+      data: taskdelete,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      message: "Error al eliminar la tarea",
+    });
+  }
+};
+
+export { createTask, getTask, updateTask , deleteTask};
