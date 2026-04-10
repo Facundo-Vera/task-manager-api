@@ -1,13 +1,14 @@
 import User from "../models/User.js";
+import { generateToken } from "../utils/jwt.js";
 
 const register = async (req, res) => {
   try {
-    const {username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
     const user = new User({
       email,
       password,
-      username
+      username,
     });
 
     await user.save();
@@ -19,14 +20,56 @@ const register = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({
-        ok:false,
-        message:error.message
-    })
+      ok: false,
+      message: error.message,
+    });
   }
 };
 
-export {
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    register,
+    const user = await User.findOne({ email }).select("+password");
 
-}
+    if (!user) {
+      return res.status(401).json({
+        ok: false,
+        message: "Credenciales incorrectas",
+      });
+    }
+
+    const isPasswordValid = user.comparePassword(password);
+
+    if (!isPasswordValid) {
+      return res.status(403).json({
+        ok: false,
+        message: "Credenciales incorrectas",
+      });
+    }
+
+    const token = generateToken(user._id);
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000,
+    };
+
+    res.cookie("token", token, cookieOptions);
+
+    return res.status(200).json({
+      ok: true,
+      message: "Login exitos!",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+};
+
+export { register,login};
