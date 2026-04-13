@@ -61,7 +61,7 @@ const login = async (req, res) => {
 
     return res.status(200).json({
       ok: true,
-      message: "Login exitos!",
+      message: "Login exitoso!",
     });
   } catch (error) {
     console.log(error);
@@ -72,4 +72,18 @@ const login = async (req, res) => {
   }
 };
 
-export { register,login};
+ const logout = async (req,res) =>{
+
+  res.clearCookie({
+    httpOnly:true,
+    secure:true,
+    sameSite:"lax"
+  });
+
+   return res.status(200).json({
+    ok:true,
+    message:"Sesion cerrada exitosamente"
+   });
+ }
+
+export { register, login ,logout};
