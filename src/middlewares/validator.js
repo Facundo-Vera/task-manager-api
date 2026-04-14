@@ -51,7 +51,7 @@ const validateRegisterUser = () => [
     .withMessage(
       "Debe tener mínimo 8 caracteres, una mayúscula, una minúscula y un número",
     ),
-
+  ]
 const validateCreateTask = [
   check("title")
     .notEmpty().withMessage("El titulo es obligatorio")
@@ -108,7 +108,7 @@ const validateLoginUser = () => [
     .isString()
     .withMessage("El campo tiene que ser un string"),
 
-
+]
 const validateDeleteTask = [
   check("id")
     .isMongoId()
