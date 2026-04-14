@@ -38,8 +38,8 @@ const validateCreateTask = [
   handleValidationErrors,
 ];
 
-const validateTaskById = async (value) => {
-  const taskById = await Task.findOne(value);
+const validateTaskById = async (id) => {
+  const taskById = await Task.findById(id);
 
   if (!taskById) {
     throw new Error("La tarea no existe");
