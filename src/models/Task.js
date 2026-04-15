@@ -3,12 +3,12 @@ import { Schema ,model} from "mongoose";
 const taskSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
     default: "",
   },
   completed: {

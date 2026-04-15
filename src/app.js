@@ -1,9 +1,12 @@
+import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { dbConnect } from "./config/db.js";
 import taskRoutes from "./routes/task.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+
 
 const app = express();
 const PORT = process.env.PORT;
@@ -21,6 +24,7 @@ app.use(morgan(`dev`));
 app.use(cookieParser());
 
 app.use("/api/tasks/", taskRoutes);
+app.use("/api/auth", authRoutes);
 
 await dbConnect();
 
